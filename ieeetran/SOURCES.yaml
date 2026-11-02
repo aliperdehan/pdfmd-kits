@@ -1,0 +1,22 @@
+# What this kit did not write: scripts/third-party.py turns this into THIRD_PARTY.md and SHA256SUMS (see its docstring)
+- what: the IEEEtran class package, installed form
+  version: V1.8b (2015-08-26)
+  files:
+  - tex
+  except:
+  - tex/upstream
+  from: TeX Live 2026 (texmf-dist/tex/latex)
+  authors: Gerry Murray, Silvano Balemi, Jon Dixon, Peter Nüchter, Juergen von Hagen (1993-2000); Michael Shell (2001-2015)
+  license: LPPL-1.3 or later
+- what: 'the complete CTAN distribution of IEEEtran class: sources, manual, samples'
+  files:
+  - tex/upstream
+  from: https://mirrors.ctan.org/macros/latex/contrib/IEEEtran.zip
+  authors: Gerry Murray, Silvano Balemi, Jon Dixon, Peter Nüchter, Juergen von Hagen (1993-2000); Michael Shell (2001-2015)
+  license: LPPL-1.3 or later
+  archive-sha256: e0cd4f5afbd42c8076092280e72b3e0a5111efe501d35de9f715cfb8da313cb4
+- what: citation style
+  files:
+  - ieee.csl
+  commit: 1ccf4696be22ea0b55f83cc9163bde3061fddb0a
+  license: CC-BY-SA-3.0

@@ -1,0 +1,24 @@
+# pdfmd kit: IEEE conference and journal papers with the IEEEtran class.
+#   pdfmd paper --kit ieeetran                conference paper, two columns
+#   pdfmd paper --kit ieeetran:journal        journal paper (names in the title, affiliations in a footnote)
+#
+# This folder holds the class (tex/), the IEEE citation style and the Lua filter. TeX needs no IEEEtran installed; with
+# Tectonic pdfmd 3.32.6 or later hands it this folder (-Zsearch-path). Sources and licenses: ../THIRD_PARTY.md.
+kit-format: 1
+name: ieeetran
+version: 0.1.0
+description: IEEE papers (IEEEtran class, IEEE citation style, front-matter filter)
+default-mode: conference
+defaults: metadata.yaml
+lua: [ieeetran.lua]
+carry: [tex/, ieee.csl]
+
+modes:
+  conference:
+    aliases: [conf]
+    description: conference paper, author blocks side by side
+    metadata: {classoption: [conference]}
+  journal:
+    aliases: [jrnl, transactions]
+    description: journal paper, author names with affiliations in a footnote
+    metadata: {classoption: [journal]}
