@@ -1,0 +1,9 @@
+documentclass: elsarticle
+papersize: letter
+lang: en-US
+indent: true
+csl: elsevier-harvard.csl
+link-citations: true
+colorlinks: false
+mainfont: TeX Gyre Termes
+geometry: " "              # the class sets the page itself; this stops pdfmd's automatic margin (and a clash with the class's geometry)

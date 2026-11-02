@@ -1,0 +1,27 @@
+# What this kit did not write: scripts/third-party.py turns this into THIRD_PARTY.md and SHA256SUMS (see its docstring)
+- what: the elsarticle class package, installed form
+  version: CTAN 3.5
+  files:
+  - tex
+  except:
+  - tex/upstream
+  from: TeX Live 2026 (texmf-dist/tex/latex)
+  authors: Elsevier Ltd (2007-2026)
+  license: LPPL-1.3 or later
+- what: 'the complete CTAN distribution of elsarticle class: sources, manual, samples'
+  files:
+  - tex/upstream
+  from: https://mirrors.ctan.org/macros/latex/contrib/elsarticle.zip
+  authors: Elsevier Ltd (2007-2026)
+  license: LPPL-1.3 or later
+  archive-sha256: f25a3e1b006e0f86abb091a02f3afa7c6d60491665c7aa89f70cc5609e14d9dc
+- what: citation style
+  files:
+  - elsevier-harvard.csl
+  commit: 9b37385e700b67ed908ebf3ac60321c60405b7e0
+  license: CC-BY-SA-3.0
+- what: citation style
+  files:
+  - elsevier-with-titles.csl
+  commit: b7df21a2b28d7a747637041a875865ed1845ca7d
+  license: CC-BY-SA-3.0

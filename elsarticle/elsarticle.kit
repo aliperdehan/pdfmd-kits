@@ -1,0 +1,34 @@
+# pdfmd kit: Elsevier journals with the elsarticle class.
+#   pdfmd paper --kit elsarticle              preprint layout, author-year citations
+#   pdfmd paper --kit elsarticle:numbered     numbered citations
+#   pdfmd paper --kit elsarticle:5p           the two-column "5p" journal layout
+#
+# This folder holds the class (tex/), two Elsevier citation styles and the Lua filter. TeX needs no elsarticle package
+# installed; with Tectonic pdfmd 3.32.6 or later hands it this folder (-Zsearch-path). Sources and licenses: ../THIRD_PARTY.md.
+kit-format: 1
+name: elsarticle
+version: 0.1.0
+description: Elsevier journal manuscripts (elsarticle class, Elsevier citation styles, front-matter filter)
+default-mode: preprint
+defaults: metadata.yaml
+lua: [elsarticle.lua]
+carry: [tex/, elsevier-harvard.csl, elsevier-with-titles.csl]
+
+modes:
+  preprint:
+    aliases: [harvard, authoryear]
+    description: preprint layout, author-year citations (Elsevier Harvard)
+    metadata: {classoption: [preprint, 12pt, authoryear]}
+  numbered:
+    aliases: [numeric]
+    description: preprint layout, numbered citations
+    metadata: {classoption: [preprint, 12pt, number], csl: elsevier-with-titles.csl}
+  review:
+    description: double-spaced review layout, author-year citations
+    metadata: {classoption: [review, 12pt, authoryear]}
+  3p:
+    description: one-column journal layout, 3 pages per column width
+    metadata: {classoption: [3p, authoryear]}
+  5p:
+    description: two-column journal layout
+    metadata: {classoption: [5p, twocolumn, authoryear]}
