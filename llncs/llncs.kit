@@ -1,0 +1,23 @@
+# pdfmd kit: Springer Lecture Notes in Computer Science with the llncs class.
+#   pdfmd paper --kit llncs                   with running heads (the usual proceedings layout)
+#   pdfmd paper --kit llncs:plain             without running heads
+#
+# This folder holds the class (tex/), the LNCS citation style and the Lua filter. TeX needs no llncs installed; with
+# Tectonic pdfmd 3.32.6 or later hands it this folder (-Zsearch-path). Sources and licenses: ../THIRD_PARTY.md.
+kit-format: 1
+name: llncs
+version: 0.1.0
+description: Springer LNCS papers (llncs class, LNCS citation style, front-matter filter)
+default-mode: proceedings
+defaults: metadata.yaml
+lua: [llncs.lua]
+carry: [tex/, springer-lecture-notes-in-computer-science.csl]
+
+modes:
+  proceedings:
+    aliases: [runningheads, lncs]
+    description: with running heads (\titlerunning and \authorrunning are set from the title and the authors)
+    metadata: {classoption: [runningheads]}
+  plain:
+    description: without running heads
+    metadata: {classoption: []}

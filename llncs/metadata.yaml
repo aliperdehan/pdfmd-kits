@@ -1,0 +1,9 @@
+documentclass: llncs
+papersize: a4
+lang: en-US
+indent: true
+csl: springer-lecture-notes-in-computer-science.csl
+link-citations: true
+colorlinks: false
+mainfont: TeX Gyre Termes
+geometry: " "              # the class sets the page itself; this stops pdfmd's automatic margin

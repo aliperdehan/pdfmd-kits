@@ -1,0 +1,22 @@
+# What this kit did not write: scripts/third-party.py turns this into THIRD_PARTY.md and SHA256SUMS (see its docstring)
+- what: the llncs class package, installed form
+  version: v2.26 (2025-02-25)
+  files:
+  - tex
+  except:
+  - tex/upstream
+  from: TeX Live 2026 (texmf-dist/tex/latex)
+  authors: Springer (1996-2025)
+  license: CC-BY-4.0 (4.0 or later)
+- what: 'the complete CTAN distribution of llncs class: sources, manual, samples'
+  files:
+  - tex/upstream
+  from: https://mirrors.ctan.org/macros/latex/contrib/llncs.zip
+  authors: Springer (1996-2025)
+  license: CC-BY-4.0 (4.0 or later)
+  archive-sha256: 932940fb23574fbc8c61afe6094e2debe0955e1bc6f971f734f3cb4de5d1167a
+- what: citation style
+  files:
+  - springer-lecture-notes-in-computer-science.csl
+  commit: 6ead27bca765563a8b49c4a20b2900f57caeae29
+  license: CC-BY-SA-3.0
