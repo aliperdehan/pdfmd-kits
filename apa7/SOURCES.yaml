@@ -1,0 +1,23 @@
+# What this kit did not write: scripts/third-party.py turns this into THIRD_PARTY.md and SHA256SUMS (see its docstring)
+- what: the apa7 class package, installed form
+  version: v2.16 (2022-07-25)
+  files:
+  - tex/apa7.cls
+  - tex/config
+  except:
+  - tex/upstream
+  from: TeX Live 2026 (texmf-dist/tex/latex)
+  authors: Daniel A. Weiss (2022); the class continues the apa6 class of Brian D. Beitzel (2011-2017)
+  license: LPPL-1.3c
+- what: 'the complete CTAN distribution of apa7 class: sources, manual, samples'
+  files:
+  - tex/upstream
+  from: https://mirrors.ctan.org/macros/latex/contrib/apa7.zip
+  authors: Daniel A. Weiss (2022); the class continues the apa6 class of Brian D. Beitzel (2011-2017)
+  license: LPPL-1.3c
+  archive-sha256: a63d4141b08f85d9133c5df7c4df1fc8ca86f3b9a22c63b5472c510b08b834e2
+- what: citation style
+  files:
+  - apa.csl
+  commit: 3c6698d791a83016d699f50cbbea857f6ee3d2f8
+  license: CC-BY-SA-3.0
