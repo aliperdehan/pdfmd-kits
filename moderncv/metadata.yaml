@@ -1,0 +1,10 @@
+documentclass: moderncv
+classoption: [sans]
+fontsize: 11pt
+papersize: a4
+indent: false
+colorlinks: false
+cvcolor: blue              # black, blue, burgundy, green, grey, orange, purple, red, cerulean...
+mainfont: TeX Gyre Heros   # a Helvetica clone with real bold and italic: moderncv sets its text in sans serif
+sansfont: TeX Gyre Heros
+geometry: " "              # the class sets the page itself; this stops pdfmd's automatic margin

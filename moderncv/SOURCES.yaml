@@ -1,0 +1,17 @@
+# What this kit did not write: scripts/third-party.py turns this into THIRD_PARTY.md and SHA256SUMS (see its docstring)
+- what: the moderncv class package, installed form
+  version: v2.6.1 (2026-06-24)
+  files:
+  - tex
+  except:
+  - tex/upstream
+  from: 'the CTAN archive (newer than TeX Live 2026''s v2.5.1: the archive''s files replaced those of TeX Live)'
+  authors: Xavier Danaux (2006-2015); the moderncv maintainers (2020-2026)
+  license: LPPL-1.3c
+- what: 'the complete CTAN distribution of moderncv class: sources, manual, samples'
+  files:
+  - tex/upstream
+  from: https://mirrors.ctan.org/macros/latex/contrib/moderncv.zip
+  authors: Xavier Danaux (2006-2015); the moderncv maintainers (2020-2026)
+  license: LPPL-1.3c
+  archive-sha256: 9b50ba5c8e7de1c55e1252eaa0126f498fea2cd2d18236aab146f9f21d01ad59

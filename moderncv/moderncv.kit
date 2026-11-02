@@ -1,0 +1,35 @@
+# pdfmd kit: curricula vitae with the moderncv class.
+#   pdfmd cv --kit moderncv                   the casual style
+#   pdfmd cv --kit moderncv:classic           also banking, oldstyle, fancy, contemporary
+#
+# This folder holds the class and its style files (tex/) and the Lua filter. TeX needs no moderncv installed; with
+# Tectonic pdfmd 3.32.6 or later hands it this folder (-Zsearch-path). Sources and licenses: ../THIRD_PARTY.md.
+# A CV has no citation style; the filter turns two fenced-div classes into \cventry and \cvitem (see README.md).
+kit-format: 1
+name: moderncv
+version: 0.1.0
+description: curricula vitae (moderncv class, front-matter and div filter)
+default-mode: casual
+defaults: metadata.yaml
+lua: [moderncv.lua]
+carry: [tex/]
+
+modes:
+  casual:
+    description: the casual style
+    metadata: {cvstyle: casual}
+  classic:
+    description: the classic style
+    metadata: {cvstyle: classic}
+  banking:
+    description: the banking style
+    metadata: {cvstyle: banking}
+  oldstyle:
+    description: the old style
+    metadata: {cvstyle: oldstyle}
+  fancy:
+    description: the fancy style
+    metadata: {cvstyle: fancy}
+  contemporary:
+    description: the contemporary style
+    metadata: {cvstyle: contemporary}
