@@ -1,0 +1,34 @@
+# pdfmd kit: American Chemical Society journals with the achemso class.
+#   pdfmd paper --kit achemso                 an article for the journal named by `journal:` (jacsat by default)
+#   pdfmd paper --kit achemso:communication
+#
+# This folder holds the class and its journal files (tex/), the ACS citation style and the Lua filter. TeX needs no
+# achemso package installed; with Tectonic pdfmd 3.32.6 or later hands it this folder (-Zsearch-path).
+# Sources and licenses: ../THIRD_PARTY.md.
+kit-format: 1
+name: achemso
+version: 0.1.0
+description: ACS journal manuscripts (achemso class, ACS citation style, front-matter filter)
+default-mode: article
+defaults: metadata.yaml
+lua: [achemso.lua]
+carry: [tex/, american-chemical-society.csl]
+
+modes:
+  article:
+    aliases: [paper, full]
+    description: a full paper
+    metadata: {classoption: ["manuscript=article"]}
+  communication:
+    aliases: [comm]
+    description: a communication
+    metadata: {classoption: ["manuscript=communication"]}
+  letter:
+    description: a letter
+    metadata: {classoption: ["manuscript=letter"]}
+  note:
+    description: a note
+    metadata: {classoption: ["manuscript=note"]}
+  review:
+    description: a review article
+    metadata: {classoption: ["manuscript=review"]}

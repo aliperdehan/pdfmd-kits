@@ -1,0 +1,10 @@
+documentclass: achemso
+journal: jacsat            # the target journal: the class option journal=; any code of achemso's list (see tex/upstream/achemso.pdf)
+papersize: letter
+lang: en-US
+indent: true               # the class sets its own paragraph indent; Pandoc's default would remove it
+csl: american-chemical-society.csl
+link-citations: true
+colorlinks: false
+geometry: margin=2.54cm   # the class loads geometry with exactly this; a second load with other options stops LaTeX
+mainfont: TeX Gyre Termes  # Times-like with real bold and italic (xelatex, lualatex, Tectonic)

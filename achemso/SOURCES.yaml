@@ -1,0 +1,22 @@
+# What this kit did not write: scripts/third-party.py turns this into THIRD_PARTY.md and SHA256SUMS (see its docstring)
+- what: the achemso class package, installed form
+  version: v3.14 (2025-09-22)
+  files:
+  - tex
+  except:
+  - tex/upstream
+  from: TeX Live 2026 (texmf-dist/tex/latex)
+  authors: Joseph Wright (2008-2025)
+  license: LPPL-1.3c
+- what: 'the complete CTAN distribution of achemso class: sources, manual, samples'
+  files:
+  - tex/upstream
+  from: https://mirrors.ctan.org/macros/latex/contrib/achemso.zip
+  authors: Joseph Wright (2008-2025)
+  license: LPPL-1.3c
+  archive-sha256: 0fd9e883a2ff3f074859be868e3b468935b89e2c7474e3a8b1dd62a220619b45
+- what: citation style
+  files:
+  - american-chemical-society.csl
+  commit: a81be93326fd9e0cdb23d345572141bd5ffbe154
+  license: CC-BY-SA-3.0
