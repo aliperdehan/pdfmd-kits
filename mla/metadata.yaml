@@ -1,0 +1,9 @@
+documentclass: mla
+papersize: letter
+# no `lang:` here: the class loads babel[american] itself, and a second babel option stops LaTeX
+indent: true
+csl: modern-language-association.csl
+link-citations: true
+colorlinks: false
+mainfont: TeX Gyre Termes
+geometry: " "              # the class sets the page itself; this stops pdfmd's automatic margin

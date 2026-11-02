@@ -1,0 +1,18 @@
+# pdfmd kit: MLA-style student papers with the mla class.
+#   pdfmd paper --kit mla
+#
+# This folder holds the class (tex/), the MLA citation style and the Lua filter. TeX needs no mla class installed; with
+# Tectonic pdfmd 3.32.6 or later hands it this folder (-Zsearch-path). Sources and licenses: ../THIRD_PARTY.md.
+kit-format: 1
+name: mla
+version: 0.1.0
+description: MLA papers (mla class, MLA citation style, front-matter filter)
+default-mode: paper
+defaults: metadata.yaml
+lua: [mla.lua]
+carry: [tex/, modern-language-association.csl]
+
+modes:
+  paper:
+    aliases: [student, essay]
+    description: an MLA paper (heading block, running head, Works Cited)

@@ -1,0 +1,22 @@
+# What this kit did not write: scripts/third-party.py turns this into THIRD_PARTY.md and SHA256SUMS (see its docstring)
+- what: the mla class (mlacls) package, installed form
+  version: v1.1 (2024-09-13)
+  files:
+  - tex
+  except:
+  - tex/upstream
+  from: TeX Live 2026 (texmf-dist/tex/latex)
+  authors: Seth M. Price (2019)
+  license: LPPL-1.3c
+- what: 'the complete CTAN distribution of mla class (mlacls): sources, manual, samples'
+  files:
+  - tex/upstream
+  from: https://mirrors.ctan.org/macros/latex/contrib/mlacls.zip
+  authors: Seth M. Price (2019)
+  license: LPPL-1.3c
+  archive-sha256: 31406f3ca5344b745b1852643d9232b8b7340839a3e69ad3c93a7090f1036bb1
+- what: citation style
+  files:
+  - modern-language-association.csl
+  commit: c0c8fd69fb7222b81cfd068d3bccfdb17b833045
+  license: CC-BY-SA-3.0
