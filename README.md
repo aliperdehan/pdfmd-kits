@@ -2,8 +2,11 @@
 
 Ready-made [pdfmd](https://github.com/aliperdehan/pdfmd) kits: a LaTeX class or package, its Lua filter, default
 metadata and citation style in one folder, so that `pdfmd paper --kit apa7` produces a paper in that house style
-from a plain Markdown file. Each kit carries what it needs, so it works with a full TeX Live, with
-[Tectonic](https://tectonic-typesetting.github.io/) or with a minimal TeX installation.
+from a plain Markdown file. Each kit carries its own class, citation style and filter. It is tested with a full
+TeX Live (xelatex, lualatex) and, with the extra option below, with
+[Tectonic](https://tectonic-typesetting.github.io/). The classes also need their usual helper packages (apa7
+uses fancyhdr, endfloat, threeparttable, caption and others): Tectonic fetches them itself, a small TeX
+installation such as BasicTeX or TinyTeX needs them from `tlmgr`.
 
 | Kit | Style | Modes |
 |---|---|---|
@@ -12,7 +15,7 @@ from a plain Markdown file. Each kit carries what it needs, so it works with a f
 ## Use
 
 ```sh
-git clone https://github.com/aliperdehan/kits ~/kits
+git clone https://github.com/OWNER/REPO ~/kits     # the repository is not published yet
 ```
 
 Name the folder once in pdfmd's config (`kits:` in `~/.config/pdfmd/config.yaml`, or the *Folders of kits* row of
