@@ -1,0 +1,9 @@
+# rename to metadata.yaml. Defaults every mode gets; a document's own front matter wins.
+documentclass: CLASSNAME
+papersize: letter
+indent: true                # Pandoc removes paragraph indents unless told otherwise
+csl: STYLE.csl
+colorlinks: false
+mainfont: TeX Gyre Termes   # a font with a real bold (the automatic one has none for XeTeX/LuaTeX)
+geometry: " "               # or the class's own geometry options; stops pdfmd's automatic margin
+# no `lang:` if the class loads babel itself

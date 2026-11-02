@@ -1,0 +1,18 @@
+# rename to SOURCES.yaml. What the kit did not write (see ../WRITING-A-KIT.md, section 7).
+- what: the CLASSNAME class package, installed form
+  version: "v1.0 (2026-01-01)"
+  files: [tex]
+  except: [tex/upstream]
+  from: TeX Live 2026 (texmf-dist/tex/latex)
+  authors: who wrote it, from its files
+  license: LPPL-1.3c
+- what: the complete CTAN distribution of CLASSNAME
+  files: [tex/upstream]
+  from: https://mirrors.ctan.org/macros/latex/contrib/CLASSNAME.zip
+  authors: who wrote it
+  license: LPPL-1.3c
+  archive-sha256: the SHA-256 of the zip you downloaded
+- what: citation style
+  files: [STYLE.csl]
+  commit: the commit scripts/fetch-csl.py printed
+  license: CC-BY-SA-3.0

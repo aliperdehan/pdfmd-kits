@@ -19,8 +19,10 @@ for example in "$root"/*/example/*.md; do
   [ -z "$only" ] || [ "$only" = "$kit" ] || continue
   # the front matter of an example may say which modes to try: `# check-modes: stu man`
   modes=$(sed -n 's/^# check-modes: //p' "$example" | head -1)
+  # `# check-engines: lualatex xelatex` limits the engines for an example (a class the other engines cannot run)
+  only_engines=$(sed -n 's/^# check-engines: //p' "$example" | head -1)
   for mode in ${modes:-""}; do
-    for engine in $engines; do
+    for engine in ${only_engines:-$engines}; do
       command -v "$engine" >/dev/null 2>&1 || { echo "skip  $kit${mode:+:$mode} $engine (not installed)"; continue; }
       dir="$work/$kit-${mode:-default}-$engine"
       mkdir -p "$dir"

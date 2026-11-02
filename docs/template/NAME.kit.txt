@@ -1,0 +1,14 @@
+# Copy this folder to NAME/, rename this file to NAME.kit, and fill it in. See ../WRITING-A-KIT.md.
+kit-format: 1
+name: NAME
+version: 0.1.0
+description: what it makes, in a line
+default-mode: main
+defaults: metadata.yaml
+lua: [NAME.lua]
+carry: [tex/]               # the class and its files, unchanged; add your .csl files
+
+modes:
+  main:
+    description: the usual layout
+    metadata: {classoption: []}

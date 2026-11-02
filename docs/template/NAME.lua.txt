@@ -1,0 +1,81 @@
+-- rename to NAME.lua. Front matter -> the commands of CLASSNAME.
+-- Only for LaTeX output and only when the document class is CLASSNAME. Reads and writes text: no files, no commands, no network.
+
+local utils = pandoc.utils
+
+-- a MetaValue as a LaTeX fragment
+local function to_latex(value)
+  if value == nil then return nil end
+  local doc
+  local t = utils.type(value)
+  if t == 'Blocks' then
+    doc = pandoc.Pandoc(value)
+  elseif t == 'Inlines' then
+    doc = pandoc.Pandoc({ pandoc.Plain(value) })
+  else
+    doc = pandoc.Pandoc({ pandoc.Plain({ pandoc.Str(utils.stringify(value)) }) })
+  end
+  local out = pandoc.write(doc, 'latex')
+  out = out:gsub('^%s+', ''):gsub('%s+$', '')
+  if out == '' then return nil end
+  return out
+end
+
+local function as_list(value)
+  if value == nil then return {} end
+  if utils.type(value) == 'List' then return value end
+  return { value }
+end
+
+local function plain(value)
+  if value == nil then return nil end
+  local s = utils.stringify(value)
+  if s == '' then return nil end
+  return s
+end
+
+-- add a block of raw LaTeX to a list-valued metadata key (header-includes, include-before)
+local function append_blocks(meta, key, raw)
+  local merged = pandoc.MetaList({})
+  for _, item in ipairs(as_list(meta[key])) do merged[#merged + 1] = item end
+  merged[#merged + 1] = pandoc.MetaBlocks({ pandoc.RawBlock('latex', raw) })
+  meta[key] = merged
+end
+
+return {
+  { Meta = function(meta)
+      if not FORMAT:match('latex') then return nil end
+      if plain(meta.documentclass) ~= 'CLASSNAME' then return nil end
+
+      local body = {}                                   -- goes right after \begin{document}
+      local title = to_latex(meta.title)
+      if title then body[#body + 1] = '\\title{' .. title .. '}' end
+      -- authors: classes differ. achemso, revtex, acmart and elsarticle want one \author{..} per author (as here);
+      -- IEEEtran and llncs want ONE \author{..} with all the names (a later \author replaces an earlier one).
+      local names = {}
+      for _, author in ipairs(as_list(meta.author)) do
+        local name = plain(utils.type(author) == 'table' and author.name or author)
+        if name then
+          names[#names + 1] = name
+          body[#body + 1] = '\\author{' .. (to_latex(pandoc.Str(name)) or name) .. '}'
+        end
+      end
+      local abstract = to_latex(meta.abstract)
+      if abstract then body[#body + 1] = '\\begin{abstract}\n' .. abstract .. '\n\\end{abstract}' end
+      body[#body + 1] = '\\maketitle'
+      append_blocks(meta, 'include-before', table.concat(body, '\n'))
+
+      append_blocks(meta, 'header-includes', table.concat({
+        -- citations: the style made the text already (section 5, point 4 of the guide)
+        '\\AtBeginDocument{\\DeclareDocumentCommand\\citeproc{mm}{#2}\\renewcommand{\\bibitem}[2][]{\\item}}',
+        -- Pandoc's empty \author{} and \date{} in the preamble (point 3), if the class chokes on them:
+        -- '\\let\\pdfmdauthor\\author\n\\renewcommand{\\author}[2][]{}\n\\AtBeginDocument{\\let\\author\\pdfmdauthor}',
+      }, '\n'))
+
+      -- Pandoc must not write what was written above; the PDF's own metadata keeps them
+      if title then meta['title-meta'] = pandoc.MetaString(plain(meta.title)) end
+      if #names > 0 then meta['author-meta'] = pandoc.MetaString(table.concat(names, ', ')) end
+      meta.title, meta.author, meta.abstract = nil, nil, nil
+      return meta
+    end },
+}
