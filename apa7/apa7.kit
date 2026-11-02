@@ -1,0 +1,33 @@
+# pdfmd kit: APA 7th edition papers with the apa7 class.
+#   pdfmd paper --kit apa7            student paper (the default mode)
+#   pdfmd paper --kit apa7:man        professional manuscript (double-spaced, title on its own page)
+#   pdfmd kits                        pdfmd --kits apa7 shows and checks this file
+#
+# Everything the build needs is in this folder: the class and its language files (tex/), the citation style
+# (apa.csl) and the Lua filter (apa7.lua), so it works with a full TeX Live, with Tectonic or with a TeX
+# installation that has no apa7 package. See ../THIRD_PARTY.md for where each file comes from and its license.
+kit-format: 1
+name: apa7
+description: APA 7th edition papers (apa7 class, apa.csl, front-matter filter)
+default-mode: stu
+defaults: metadata.yaml
+lua: [apa7.lua]
+carry: [tex/, apa.csl]
+
+modes:
+  stu:
+    aliases: [student, "student paper"]
+    description: student paper, with the title-page fields course, professor and duedate
+    metadata: {classoption: [stu]}
+  man:
+    aliases: [manuscript, professional]
+    description: professional manuscript, double-spaced, author note and running head
+    metadata: {classoption: [man]}
+  doc:
+    aliases: [document, single]
+    description: a single-spaced document in APA style
+    metadata: {classoption: [doc]}
+  jou:
+    aliases: [journal]
+    description: journal-article layout (two columns, Times)
+    metadata: {classoption: [jou]}

@@ -1,0 +1,12 @@
+documentclass: apa7
+fontsize: 12pt
+papersize: letter
+lang: en-US
+indent: true            # first-line indent on paragraphs, as APA wants (Pandoc's default is none)
+csl: apa.csl
+link-citations: true
+colorlinks: false      # APA prints links and citations in black (the global metadata may colour them)
+mainfont: TeX Gyre Termes   # a Times clone with real bold and italic (APA 7 allows Times New Roman 12 pt); xelatex, lualatex, tectonic
+# apa7 loads geometry itself with exactly these options; pdfmd's automatic margin (and Pandoc) would load it a second
+# time with other options, which LaTeX stops on ("Option clash for package geometry"). Naming the same ones avoids it.
+geometry: [top=1in, bottom=1in, left=1in, right=1in]
