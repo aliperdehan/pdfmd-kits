@@ -1,0 +1,27 @@
+# What this kit did not write: scripts/third-party.py turns this into THIRD_PARTY.md and SHA256SUMS (see its docstring)
+- what: the revtex4-2 class package, installed form
+  version: CTAN 4.2f
+  files:
+  - tex
+  except:
+  - tex/upstream
+  from: TeX Live 2026 (texmf-dist/tex/latex)
+  authors: American Physical Society (1999-2022)
+  license: LPPL-1.3c or later
+- what: 'the complete CTAN distribution of revtex4-2 class: sources, manual, samples'
+  files:
+  - tex/upstream
+  from: https://mirrors.ctan.org/macros/latex/contrib/revtex.zip
+  authors: American Physical Society (1999-2022)
+  license: LPPL-1.3c or later
+  archive-sha256: 5a5ebc9831ae219b2bcf2f8b408dc07a55a9e244af1317f1f25ca187daa40d82
+- what: citation style
+  files:
+  - american-physics-society.csl
+  commit: 77c46c415385cd9d68525dbad3bdf86cb5e18260
+  license: CC-BY-SA-3.0
+- what: citation style
+  files:
+  - american-institute-of-physics.csl
+  commit: 72c96faed175645b7438054369376cb7eac688eb
+  license: CC-BY-SA-3.0

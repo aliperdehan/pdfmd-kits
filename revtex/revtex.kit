@@ -1,0 +1,38 @@
+# pdfmd kit: APS and AIP journals with the revtex4-2 class.
+#   pdfmd paper --kit revtex                  Physical Review Letters, reprint layout
+#   pdfmd paper --kit revtex:prb              Physical Review B
+#   pdfmd paper --kit revtex:jcp              Journal of Chemical Physics (AIP)
+#   pdfmd paper --kit revtex:preprint         one column, double-spaced, for submission
+#
+# This folder holds the class (tex/), the APS and AIP citation styles and the Lua filter. TeX needs no revtex installed; with
+# Tectonic pdfmd 3.32.6 or later hands it this folder (-Zsearch-path). Sources and licenses: ../THIRD_PARTY.md.
+kit-format: 1
+name: revtex
+version: 0.1.0
+description: APS and AIP journal papers (revtex4-2 class, APS and AIP citation styles, front-matter filter)
+default-mode: prl
+defaults: metadata.yaml
+lua: [revtex.lua]
+carry: [tex/, american-physics-society.csl, american-institute-of-physics.csl]
+
+modes:
+  prl:
+    aliases: [aps, letters]
+    description: Physical Review Letters, two columns
+    metadata: {classoption: [aps, prl, reprint, superscriptaddress]}
+  prb:
+    description: Physical Review B
+    metadata: {classoption: [aps, prb, reprint, superscriptaddress]}
+  pra:
+    description: Physical Review A
+    metadata: {classoption: [aps, pra, reprint, superscriptaddress]}
+  pre:
+    description: Physical Review E
+    metadata: {classoption: [aps, pre, reprint, superscriptaddress]}
+  jcp:
+    aliases: [aip]
+    description: Journal of Chemical Physics (AIP)
+    metadata: {classoption: [aip, jcp, reprint], csl: american-institute-of-physics.csl}
+  preprint:
+    description: one column, double-spaced (APS)
+    metadata: {classoption: [aps, prl, preprint, superscriptaddress]}
