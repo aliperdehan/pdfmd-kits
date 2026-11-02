@@ -1,0 +1,48 @@
+# pdfmd kit: citation styles, nothing else. One style per mode, for any document (no LaTeX class, no filter).
+#   pdfmd paper --kit csl:apa            also mla, chicago, chicago-notes, harvard, vancouver, nature, ieee, acs, rsc
+#
+# The styles are the unchanged files of the CSL project (CC BY-SA 3.0); see ../THIRD_PARTY.md. A mode only sets `csl:`,
+# so it works with every output format pdfmd writes (PDF, Word, HTML ...) and combines with another kit
+# (`--kit apa7 --kit-stack all --kit csl:chicago` is possible, but then the paper is no longer APA).
+kit-format: 1
+name: csl
+version: 0.1.0
+description: citation styles (APA, MLA, Chicago, Harvard, Vancouver, Nature, IEEE, ACS, RSC)
+default-mode: apa
+carry: [apa.csl, modern-language-association.csl, chicago-author-date.csl, chicago-notes-bibliography.csl, harvard-cite-them-right.csl, nlm-citation-sequence.csl, nature.csl, ieee.csl, american-chemical-society.csl, royal-society-of-chemistry.csl]
+
+modes:
+  apa:
+    description: APA 7th edition (author-date)
+    metadata: {csl: apa.csl}
+  mla:
+    description: MLA Handbook 9th edition
+    metadata: {csl: modern-language-association.csl}
+  chicago:
+    aliases: [chicago-author-date]
+    description: Chicago Manual of Style 18th edition, author-date
+    metadata: {csl: chicago-author-date.csl}
+  chicago-notes:
+    aliases: [notes]
+    description: Chicago Manual of Style 18th edition, notes and bibliography (footnotes)
+    metadata: {csl: chicago-notes-bibliography.csl}
+  harvard:
+    description: Cite Them Right 12th edition (Harvard)
+    metadata: {csl: harvard-cite-them-right.csl}
+  vancouver:
+    aliases: [nlm]
+    description: NLM/Vancouver, numbered (Citing Medicine, 2nd edition)
+    metadata: {csl: nlm-citation-sequence.csl}
+  nature:
+    description: Nature
+    metadata: {csl: nature.csl}
+  ieee:
+    description: IEEE
+    metadata: {csl: ieee.csl}
+  acs:
+    aliases: [american-chemical-society]
+    description: ACS Guide, 2026 revision
+    metadata: {csl: american-chemical-society.csl}
+  rsc:
+    description: Royal Society of Chemistry
+    metadata: {csl: royal-society-of-chemistry.csl}

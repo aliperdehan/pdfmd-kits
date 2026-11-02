@@ -1,0 +1,51 @@
+# What this kit did not write: scripts/third-party.py turns this into THIRD_PARTY.md and SHA256SUMS (see its docstring)
+- what: citation style
+  files:
+  - apa.csl
+  commit: 3c6698d791a83016d699f50cbbea857f6ee3d2f8
+  license: CC-BY-SA-3.0
+- what: citation style
+  files:
+  - modern-language-association.csl
+  commit: c0c8fd69fb7222b81cfd068d3bccfdb17b833045
+  license: CC-BY-SA-3.0
+- what: citation style
+  files:
+  - chicago-author-date.csl
+  commit: 1aaf551f864d50e875a617b4faf2bf5da30f3f15
+  license: CC-BY-SA-3.0
+- what: citation style
+  files:
+  - chicago-notes-bibliography.csl
+  commit: 1aaf551f864d50e875a617b4faf2bf5da30f3f15
+  license: CC-BY-SA-3.0
+- what: citation style
+  files:
+  - harvard-cite-them-right.csl
+  commit: c4b23ac4ba0de5b165fde037cbdc1df52645f861
+  license: CC-BY-SA-3.0
+- what: citation style
+  files:
+  - nlm-citation-sequence.csl
+  commit: f25316f71c0006867950b25d6d2064f5d8dd591a
+  license: CC-BY-SA-3.0
+- what: citation style
+  files:
+  - nature.csl
+  commit: e0aa3018cd24b7be9a0e2acf3f9d83a6a78d8f0f
+  license: CC-BY-SA-3.0
+- what: citation style
+  files:
+  - ieee.csl
+  commit: 1ccf4696be22ea0b55f83cc9163bde3061fddb0a
+  license: CC-BY-SA-3.0
+- what: citation style
+  files:
+  - american-chemical-society.csl
+  commit: a81be93326fd9e0cdb23d345572141bd5ffbe154
+  license: CC-BY-SA-3.0
+- what: citation style
+  files:
+  - royal-society-of-chemistry.csl
+  commit: 9e562bba7fbb36df7942a97a724fbb326bf76854
+  license: CC-BY-SA-3.0
