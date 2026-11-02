@@ -94,6 +94,9 @@ def main(argv: list[str]) -> int:
         "kept as it was (with the complete CTAN archive beside it in `tex/upstream/`) and all glue lives in files with names of their",
         "own. CC BY-SA 3.0 (the citation styles) asks for credit and that a changed copy keeps the license.",
         "",
+        "The kit's own glue (`*.kit`, `metadata.yaml`, the Lua filter) was written for these classes and contains none of their code:",
+        "it asks for a class and calls the commands its manual documents. It is not a part of any class, nor a modified copy of one.",
+        "",
     ]
     for kit in kits():
         entries = yaml.safe_load((kit / "SOURCES.yaml").read_text(encoding="utf-8")) or []

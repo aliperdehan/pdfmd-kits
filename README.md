@@ -99,6 +99,15 @@ and the SHA-256 of each (`cd KIT && shasum -a 256 -c SHA256SUMS`):
 - the citation styles are the unchanged files of the [CSL project](https://github.com/citation-style-language/styles),
   **CC BY-SA 3.0**, each pinned to the commit it was taken from.
 
+**How the kits relate to the classes.** Each kit has two kinds of files. The class (`tex/`) and the citation style are somebody
+else's work, kept byte for byte as their authors published them; their authors are named in `THIRD_PARTY.md` and in the file
+headers. The kit's own files (`*.kit`, `metadata.yaml`, the Lua filter, the README, the example) were written for this
+repository: they contain none of the class's code, they only ask for the class and call the commands its manual documents (the
+filter turns `author:` into `\author{...}`, and so on). They are not part of a class and a class is not changed by them, so the
+rule of LPPL that a modified copy must be renamed does not apply, and the kit is named after the class it is made for, as a
+reader would look for it. pdfmd itself ships none of these classes and is not derived from them: it reads the folder.
+If you think a credit is missing or wrong, open an issue.
+
 This repository is not affiliated with, or endorsed by, the American Psychological Association, the American Chemical Society, the
 American Physical Society, Elsevier, IEEE, the ACM, Springer, the MLA or any publisher; the classes are community or
 publisher-supplied templates and the names are their owners'.

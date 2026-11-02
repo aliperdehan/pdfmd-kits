@@ -45,3 +45,10 @@ A `# References` heading starts a new page in `stu` and `man`.
 - Tested with lualatex, xelatex and Tectonic. pdflatex is untested.
 - Pandoc's own `\author`, `abstract` and `date` are replaced by apa7's commands by `apa7.lua`; raw LaTeX that
   calls `\author` yourself will do nothing.
+
+## Credits
+
+The apa7 class and its language files are by Daniel A. Weiss (LPPL 1.3c) and are kept here exactly as published; `apa.csl` is the
+CSL project's APA style (CC BY-SA 3.0, credits in the file and in [`../THIRD_PARTY.md`](../THIRD_PARTY.md)). `apa7.kit`,
+`metadata.yaml` and `apa7.lua` were written for the class: they ask for it and call its documented commands, and hold none of its
+code. This kit is not affiliated with the American Psychological Association or with the class's author.
