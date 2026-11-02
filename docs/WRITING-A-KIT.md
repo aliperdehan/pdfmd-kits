@@ -177,6 +177,9 @@ kits here, in the order you will meet them. Each one shows up as a LaTeX error; 
 1. **`Option clash for package geometry`.** The class loads `geometry` itself; pdfmd (and Pandoc) load it again with
    `margin=1in`. Set `geometry:` in the kit's metadata to the class's own option list (`margin=2.54cm`), or, for a class that
    sets the page itself, to a single space (`geometry: " "`), which switches off pdfmd's automatic margin and loads nothing.
+   From pdfmd 3.32.8 the kit can say it outright in its `.kit` file, `no-auto: [margin]` (it may also name `mainfont`,
+   `monofont`, `mathfont`, `font` and `tablewidth`); a document can still turn the default back on. The kits here keep the
+   single space until their requirement moves to 3.32.8, because an older pdfmd warns about a key it does not know.
 2. **`Option clash for package babel`.** The class loads `babel`; `lang: en-US` makes Pandoc load it too. Leave `lang:` out of
    the kit's metadata (the CSL's locale defaults to US English anyway).
 3. **An empty `\author{}` and `\date{}` in the preamble.** Pandoc always writes them. Some classes keep an empty first author

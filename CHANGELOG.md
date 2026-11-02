@@ -3,6 +3,10 @@
 Newest first. The repository is tagged `vX.Y.Z`; each kit's own version is `version:` in its `.kit` file. A new kit or mode, or a
 new front-matter key, is a minor bump of the repository; a fix is a patch; a changed meaning of an existing key is a major one.
 
+## Unreleased
+
+- docs: the guide mentions `no-auto:` of pdfmd 3.32.8 (the kits themselves do not use it yet).
+
 ## v0.1.0 (2026-11-03)
 
 First version. Ten kits, each with an example that builds in every mode (85 builds with lualatex, xelatex and Tectonic):
