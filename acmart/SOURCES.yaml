@@ -1,0 +1,22 @@
+# What this kit did not write: scripts/third-party.py turns this into THIRD_PARTY.md and SHA256SUMS (see its docstring)
+- what: the acmart class package, installed form
+  version: CTAN 2.21
+  files:
+  - tex
+  except:
+  - tex/upstream
+  from: TeX Live 2026 (texmf-dist/tex/latex)
+  authors: Association for Computing Machinery (2016-2026)
+  license: LPPL-1.3 or later
+- what: 'the complete CTAN distribution of acmart class: sources, manual, samples'
+  files:
+  - tex/upstream
+  from: https://mirrors.ctan.org/macros/latex/contrib/acmart.zip
+  authors: Association for Computing Machinery (2016-2026)
+  license: LPPL-1.3 or later
+  archive-sha256: 81977a834f5cfd5302c37181ede34d2663eeea60604d1d89230e3c5e74b9a4bb
+- what: citation style
+  files:
+  - association-for-computing-machinery.csl
+  commit: c18c1a491dc6c5db555185e9858561c8357af943
+  license: CC-BY-SA-3.0

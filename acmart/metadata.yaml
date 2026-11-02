@@ -1,0 +1,9 @@
+documentclass: acmart
+papersize: letter
+lang: en-US
+indent: true
+csl: association-for-computing-machinery.csl
+link-citations: true
+colorlinks: false
+mainfont: Libertinus Serif   # the class's own face is Libertine; Libertinus is its maintained successor (in TeX Live and Tectonic)
+geometry: " "                # the class sets the page itself; this stops pdfmd's automatic margin

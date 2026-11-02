@@ -1,0 +1,30 @@
+# pdfmd kit: ACM papers with the acmart class.
+#   pdfmd paper --kit acmart                  conference proceedings, two columns (sigconf)
+#   pdfmd paper --kit acmart:manuscript       one column, for review
+#   pdfmd paper --kit acmart:sigplan          SIGPLAN proceedings
+#
+# This folder holds the class (tex/), the ACM citation style and the Lua filter. TeX needs no acmart installed; with
+# Tectonic pdfmd 3.32.6 or later hands it this folder (-Zsearch-path). Sources and licenses: ../THIRD_PARTY.md.
+# The ACM reference-format block and the copyright notice are switched off (a paper that is not yet accepted has neither);
+# set `acmconference:` or `acmjournal:` in the front matter for a paper that has a venue.
+kit-format: 1
+name: acmart
+version: 0.1.0
+description: ACM papers (acmart class, ACM citation style, front-matter filter)
+default-mode: sigconf
+defaults: metadata.yaml
+lua: [acmart.lua]
+carry: [tex/, association-for-computing-machinery.csl]
+
+modes:
+  sigconf:
+    aliases: [conference, proceedings]
+    description: conference proceedings, two columns
+    metadata: {classoption: [sigconf]}
+  sigplan:
+    description: SIGPLAN proceedings
+    metadata: {classoption: [sigplan]}
+  manuscript:
+    aliases: [review]
+    description: one column, for review
+    metadata: {classoption: [manuscript, review]}
