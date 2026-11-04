@@ -6,6 +6,11 @@ new front-matter key, is a minor bump of the repository; a fix is a patch; a cha
 ## Unreleased
 
 - docs: the guide mentions `no-auto:` of pdfmd 3.32.8 (the kits themselves do not use it yet).
+- apa7: a partial build (`pdfmd report#methods`) drops the title page, as nulabreport does; `partial-title: true` keeps it. It needs
+  pdfmd 3.32.30: before it, any header file of pdfmd's replaced the kit's `header-includes` and `\maketitle` stopped with "There's no
+  line here to end".
+- acmart: removed the two preamble entries that neutralised `\author` and `\date`. They did nothing before pdfmd 3.32.30 and, once
+  `header-includes` is honoured, swallowed the author names.
 
 ## v0.1.0 (2026-11-03)
 

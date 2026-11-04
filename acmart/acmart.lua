@@ -140,10 +140,6 @@ return {
         -- Pandoc's citeproc output goes through \cite and \bibitem[label]; the class redefines both. The citation style
         -- already made the text, so a citation is that text and \bibitem is an \item.
         '\\AtBeginDocument{\\DeclareDocumentCommand\\citeproc{mm}{#2}\\renewcommand{\\bibitem}[2][]{\\item}}',
-        -- Pandoc's template always writes \author{} and \date{} in the preamble; here they do nothing, the real ones are
-        -- back when the document begins
-        '\\let\\pdfmdauthor\\author\n\\renewcommand{\\author}[2][]{}\n\\AtBeginDocument{\\let\\author\\pdfmdauthor}',
-        '\\let\\pdfmddate\\date\n\\renewcommand{\\date}[1]{}\n\\AtBeginDocument{\\let\\date\\pdfmddate}',
       }
       local conference = as_list(meta.acmconference)
       local journal = to_latex(meta.acmjournal)

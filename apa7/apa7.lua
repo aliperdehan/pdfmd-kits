@@ -159,6 +159,16 @@ local function Meta(meta)
   for _, item in ipairs(includes) do merged[#merged + 1] = item end
   merged[#merged + 1] = pandoc.MetaBlocks({ pandoc.RawBlock('latex', table.concat(lines, '\n')) })
   meta['header-includes'] = merged
+
+  -- A partial build (`pdfmd report#methods`, a part's path: pdfmd sets `pdfmd-partial`) is for reading one
+  -- section, so the title page is dropped, as nulabreport does. Pandoc calls \maketitle only when there is a
+  -- title; it stays as `title-meta` for the PDF properties. `partial-title: true` in the front matter keeps it.
+  local partial, keep = meta['pdfmd-partial'], meta['partial-title']
+  if partial and utils.stringify(partial) == 'true'
+      and not (keep and utils.stringify(keep) == 'true') and meta.title then
+    if not meta['title-meta'] then meta['title-meta'] = pandoc.MetaString(utils.stringify(meta.title)) end
+    meta.title = nil
+  end
   return meta
 end
 
