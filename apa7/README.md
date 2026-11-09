@@ -37,6 +37,10 @@ A complete example is in [`example/`](example/): `cd example && pdfmd paper --ki
 text font (a Times clone with real bold and italic; xelatex, lualatex and Tectonic; pdflatex ignores `mainfont`),
 and `geometry` set to apa7's own margins. Set `papersize: a4` or `mainfont:` in your document to change them.
 A `# References` heading starts a new page in `stu` and `man`.
+In `stu` and `man` the body paragraphs have a 0.5 in first-line indent and the reference list a 0.5 in hanging indent (also in a
+partial build, where the title page, and so the class's own indent, is left out); each `# Appendix A: Title` heading starts a new
+page and restarts the table and figure counters, so that its tables are numbered A1, A2, ... (APA 7); a paragraph that starts with
+`*Note.*` (a table or figure note) is flush left.
 
 ## Known limits
 

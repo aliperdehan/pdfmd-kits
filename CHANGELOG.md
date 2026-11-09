@@ -5,6 +5,10 @@ new front-matter key, is a minor bump of the repository; a fix is a patch; a cha
 
 ## Unreleased
 
+- apa7 (`stu`, `man`): the 0.5 in first-line indent no longer depends on `\maketitle`, so a partial build (`pdfmd parts/20-methods.md`,
+  `report#methods`) is indented like the full one; the reference list hangs by 0.5 in (Pandoc's CSL list used 1.5em = 18 pt); an
+  `# Appendix X: Title` heading starts a new page and restarts the table and figure counters (Table A1, B1, C1); a paragraph that
+  starts with `*Note.*` is flush left. `example/appendix.md` has an appendix with a captioned table and a note.
 - docs: the guide mentions `no-auto:` of pdfmd 3.32.8 (the kits themselves do not use it yet).
 - apa7: a partial build (`pdfmd report#methods`) drops the title page, as nulabreport does; `partial-title: true` keeps it. It needs
   pdfmd 3.32.30: before it, any header file of pdfmd's replaced the kit's `header-includes` and `\maketitle` stopped with "There's no

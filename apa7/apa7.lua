@@ -13,6 +13,10 @@
 --   authornote               the author note of a manuscript
 --
 -- The filter only runs for LaTeX output and only when the document class is apa7.
+--
+-- In stu and man it also sets the 0.5 in body indent and reference hang in the header (the class sets its indent only inside
+-- \maketitle, which a partial build skips), starts each "Appendix X: Title" heading on a new page with tables numbered X1,
+-- X2 ... (APA 7), and sets a paragraph that starts with the italic word "Note." flush left.
 
 local utils = pandoc.utils
 
@@ -154,6 +158,13 @@ local function Meta(meta)
   if #names > 0 then meta['author-meta'] = pandoc.MetaString(table.concat(names, ', ')) end
   meta.author, meta.abstract = nil, nil
 
+  -- apa7.cls sets \parindent only inside \maketitle, which a partial build skips (the title is dropped below), and
+  -- Pandoc's CSL list hangs references by 1.5em. APA 7 wants 0.5 in for both.
+  if has_option(meta, 'stu') or has_option(meta, 'man') then
+    lines[#lines + 1] = '\\AtBeginDocument{\\raggedright\\setlength{\\parindent}{0.5in}'
+      .. '\\ifdefined\\cslhangindent\\setlength{\\cslhangindent}{0.5in}\\fi}'
+  end
+
   local includes = as_list(meta['header-includes'])
   local merged = pandoc.MetaList({})
   for _, item in ipairs(includes) do merged[#merged + 1] = item end
@@ -181,6 +192,22 @@ local function Header(header)
   if text == 'references' or text == 'reference list' then
     return { pandoc.RawBlock('latex', '\\clearpage'), header }
   end
+  -- "Appendix A: Title": a page of its own, and its tables are numbered A1, A2 ... (APA 7)
+  local letter = utils.stringify(header):match('^Appendix (%u)%f[%W]')
+  if letter then
+    return { pandoc.RawBlock('latex', '\\clearpage\\setcounter{table}{0}\\setcounter{figure}{0}'
+      .. '\\renewcommand{\\thetable}{' .. letter .. '\\arabic{table}}'
+      .. '\\renewcommand{\\thefigure}{' .. letter .. '\\arabic{figure}}'), header }
+  end
+end
+
+-- Table and figure notes (a paragraph that starts with the italic word "Note.") are flush left in APA 7.
+local function Para(para)
+  local first = para.content[1]
+  if paged and first and first.t == 'Emph' and utils.stringify(first) == 'Note.' then
+    table.insert(para.content, 1, pandoc.RawInline('latex', '\\noindent '))
+    return para
+  end
 end
 
 return {
@@ -188,5 +215,5 @@ return {
       paged = has_option(meta, 'man') or has_option(meta, 'stu')
       return Meta(meta)
     end },
-  { Header = Header },
+  { Header = Header, Para = Para },
 }
