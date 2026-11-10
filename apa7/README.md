@@ -41,11 +41,17 @@ In `stu` and `man` the body paragraphs have a 0.5 in first-line indent and the r
 partial build, where the title page, and so the class's own indent, is left out); each `# Appendix A: Title` heading starts a new
 page and restarts the table and figure counters, so that its tables are numbered A1, A2, ... (APA 7); a paragraph that starts with
 `*Note.*` (a table or figure note) is flush left.
+In every mode a figure's caption is set above the image, as APA 7 wants: `Figure 1` in bold on a line of its own, the
+caption from `![Caption in Title Case](figure.pdf)` in italics below it, then the image; a `*Note.*` paragraph right after the
+figure goes into the figure, below the image. Tables already have their caption above. In `stu` and `man` the class holds
+figures back to the end of the paper (after the references); the body's figures are put out before the first
+appendix, and an appendix's figures stay in it, numbered A1, A2 ... A complete example is `example/figure.md`.
 
 ## Known limits
 
 - An author name with a comma in it loses the comma (apa7 reads the list at commas).
 - The abstract is one block; apa7 does not lay out several paragraphs as APA asks.
+- A figure of several images (subfigures, a `::: {#fig-x}` div of images) keeps Pandoc's layout, with its caption below.
 - Tested with lualatex, xelatex and Tectonic. pdflatex is untested.
 - Pandoc's own `\author`, `abstract` and `date` are replaced by apa7's commands by `apa7.lua`; raw LaTeX that
   calls `\author` yourself will do nothing.

@@ -5,6 +5,10 @@ new front-matter key, is a minor bump of the repository; a fix is a patch; a cha
 
 ## Unreleased
 
+- apa7: a figure's caption is above the image in every mode (APA 7: `Figure 1` in bold, the title in italics, the image, a
+  note), and a `*Note.*` paragraph right after a figure goes into it, below the image. In `stu` and `man` the figures that the
+  class holds back to the end are put out before the first appendix, and an appendix's own figures stay in it (Figure A1).
+  New example `example/figure.md`.
 - apa7 (`stu`, `man`): the 0.5 in first-line indent no longer depends on `\maketitle`, so a partial build (`pdfmd parts/20-methods.md`,
   `report#methods`) is indented like the full one; the reference list hangs by 0.5 in (Pandoc's CSL list used 1.5em = 18 pt); an
   `# Appendix X: Title` heading starts a new page and restarts the table and figure counters (Table A1, B1, C1); a paragraph that

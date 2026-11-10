@@ -17,6 +17,10 @@
 -- In stu and man it also sets the 0.5 in body indent and reference hang in the header (the class sets its indent only inside
 -- \maketitle, which a partial build skips), starts each "Appendix X: Title" heading on a new page with tables numbered X1,
 -- X2 ... (APA 7), and sets a paragraph that starts with the italic word "Note." flush left.
+--
+-- In every mode a figure's caption is written above the image (APA 7: the number in bold, the title in italics, the image,
+-- then a note), and a "Note." paragraph right after a figure goes into the figure, so that it stays below the image when
+-- the figure floats or, in stu and man, is held back to the end of the paper.
 
 local utils = pandoc.utils
 
@@ -195,7 +199,11 @@ local function Header(header)
   -- "Appendix A: Title": a page of its own, and its tables are numbered A1, A2 ... (APA 7)
   local letter = utils.stringify(header):match('^Appendix (%u)%f[%W]')
   if letter then
-    return { pandoc.RawBlock('latex', '\\clearpage\\setcounter{table}{0}\\setcounter{figure}{0}'
+    -- stu and man hold figures back to the end (endfloat): the body's figures are put out before the first appendix, with
+    -- their own numbers, and an appendix's figures stay in its text, as the class's own \appendix does
+    return { pandoc.RawBlock('latex', '\\clearpage'
+      .. '\\ifdefined\\processdelayedfloats\\processdelayedfloats\\clearpage\\fi\\ifdefined\\appendixtrue\\appendixtrue\\fi'
+      .. '\\setcounter{table}{0}\\setcounter{figure}{0}'
       .. '\\renewcommand{\\thetable}{' .. letter .. '\\arabic{table}}'
       .. '\\renewcommand{\\thefigure}{' .. letter .. '\\arabic{figure}}'), header }
   end
@@ -210,10 +218,69 @@ local function Para(para)
   end
 end
 
+-- A figure: Pandoc writes the caption below the image; APA 7 wants it above (the class styles it: the number in bold on
+-- a line of its own, the title in italics below it), and a note below the image. The caption stays Pandoc inlines (a
+-- citation in it is still a citation). A figure of several images (subfigures) is left as Pandoc writes it.
+local apa
+local function is_note(block)
+  if not block or block.t ~= 'Para' then return false end
+  local first = block.content[1]
+  return first and first.t == 'Emph' and utils.stringify(first) == 'Note.'
+end
+
+local function caption_first(figure, note)
+  local long = utils.blocks_to_inlines(figure.caption.long or {})
+  local short = figure.caption.short
+  local caption = pandoc.List({ pandoc.RawInline('latex', '\\caption') })
+  if short and #short > 0 then
+    caption:insert(pandoc.RawInline('latex', '[{'))
+    caption:extend(short)
+    caption:insert(pandoc.RawInline('latex', '}]'))
+  end
+  caption:insert(pandoc.RawInline('latex', '{'))
+  caption:extend(long)
+  caption:insert(pandoc.RawInline('latex', '}'))
+  if figure.identifier ~= '' then
+    caption:insert(pandoc.RawInline('latex', '\\label{' .. figure.identifier .. '}'))
+  end
+  local placement = figure.attributes['latex-placement']
+  local blocks = pandoc.List({
+    pandoc.RawBlock('latex', '\\begin{figure}' .. (placement and ('[' .. placement .. ']') or '')),
+    pandoc.Plain(caption),
+    pandoc.RawBlock('latex', '{\\centering'),
+    figure.content[1],
+    pandoc.RawBlock('latex', '\\par}'),
+  })
+  if note then blocks:insert(note) end
+  blocks:insert(pandoc.RawBlock('latex', '\\end{figure}'))
+  return blocks
+end
+
+local function Blocks(blocks)
+  if not apa then return nil end
+  local out, changed, i = pandoc.List(), false, 1
+  while i <= #blocks do
+    local block = blocks[i]
+    if block.t == 'Figure' and #block.content == 1 and (block.content[1].t == 'Plain' or block.content[1].t == 'Para')
+        and #utils.blocks_to_inlines(block.caption.long or {}) > 0 then
+      local note = is_note(blocks[i + 1]) and blocks[i + 1] or nil
+      out:extend(caption_first(block, note))
+      if note then i = i + 1 end
+      changed = true
+    else
+      out:insert(block)
+    end
+    i = i + 1
+  end
+  if changed then return out end
+end
+
 return {
   { Meta = function(meta)
       paged = has_option(meta, 'man') or has_option(meta, 'stu')
+      apa = (FORMAT:match('latex') ~= nil) and plain(meta.documentclass) == 'apa7'
       return Meta(meta)
     end },
+  { Blocks = Blocks },
   { Header = Header, Para = Para },
 }
