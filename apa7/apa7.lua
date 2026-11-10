@@ -11,6 +11,7 @@
 --   duedate                  the date on the title page (date: is used when there is none)
 --   abstract, keywords       keywords may be a list
 --   authornote               the author note of a manuscript
+--   titleoffset              how far down the title page the title starts: lines (4) or a length (2in, 5cm)
 --
 -- The filter only runs for LaTeX output and only when the document class is apa7.
 --
@@ -63,6 +64,23 @@ local function has_option(meta, wanted)
     if utils.stringify(option) == wanted then return true end
   end
   return false
+end
+
+-- The space above the title, as \maketitle of each mode writes it (stu and man share one \maketitle).
+local TITLE_SPACE = {
+  stu = '\\vspace*{4\\baselineskip}', man = '\\vspace*{4\\baselineskip}',
+  doc = '\\vspace*{0.3in}', jou = '\\vspace{0.03in}',
+}
+local UNITS = { ['in'] = true, cm = true, mm = true, pt = true, em = true }
+
+-- titleoffset: a bare number is lines (the class's \baselineskip), a number with a unit is a length
+local function title_offset(value)
+  local text = utils.stringify(value):gsub('^%s+', ''):gsub('%s+$', '')
+  local number = text:match('^%d*%.?%d+$')
+  if number then return number .. '\\baselineskip' end
+  local amount, unit = text:match('^(%d*%.?%d+)%s*(%a+)$')
+  if amount and UNITS[unit] then return amount .. unit end
+  error('apa7 kit: titleoffset: "' .. text .. '" is neither a number of lines (4) nor a length (2in, 5cm, 40mm, 72pt, 3em)', 0)
 end
 
 local function Meta(meta)
@@ -149,6 +167,17 @@ local function Meta(meta)
   emit('professor', to_latex(meta.professor or meta.instructor))
   emit('duedate', to_latex(meta.duedate or meta.date))
   emit('authornote', to_latex(meta.authornote))
+
+  -- titleoffset: the class's own space above the title is replaced (etoolbox; \maketitle is read with @ a letter)
+  if meta.titleoffset ~= nil then
+    local mode = 'jou'                       -- the class's own default when no mode option is given
+    for _, name in ipairs({ 'stu', 'man', 'doc' }) do
+      if has_option(meta, name) then mode = name break end
+    end
+    lines[#lines + 1] = '\\usepackage{etoolbox}\\makeatletter\\patchcmd{\\maketitle}{' .. TITLE_SPACE[mode] .. '}'
+      .. '{\\vspace*{' .. title_offset(meta.titleoffset) .. '}}{}'
+      .. '{\\PackageWarningNoLine{apa7.lua}{titleoffset: not applied, the class\'s title page has changed}}\\makeatother'
+  end
 
   local keywords = {}
   for _, word in ipairs(as_list(meta.keywords)) do

@@ -27,6 +27,7 @@ pdfmd paper --kit apa7:man
 | `duedate` (or `date`) | student title page |
 | `abstract`, `keywords` | the abstract is on its own page; `keywords` may be a list |
 | `authornote` | manuscript author note |
+| `titleoffset` | how far down the title page the title starts: a number of lines (`6`; the class's own is 4 in `stu` and `man`) or a length (`2in`, `5cm`, `40mm`, `72pt`, `3em`); every mode |
 | `bibliography` | a `.bib` file; cite with `[@key]` or `[@key, p. 12]` |
 
 A complete example is in [`example/`](example/): `cd example && pdfmd paper --kit apa7`.

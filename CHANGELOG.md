@@ -5,6 +5,9 @@ new front-matter key, is a minor bump of the repository; a fix is a patch; a cha
 
 ## Unreleased
 
+- apa7: `titleoffset:` sets how far down the title page the title starts, in lines (`6`) or as a length (`2in`, `5cm`); without it
+  the class's own space is kept (4 lines in `stu` and `man`). Any other value stops the build with a message naming the key.
+  New example `example/options.md`.
 - apa7: a figure's caption is above the image in every mode (APA 7: `Figure 1` in bold, the title in italics, the image, a
   note), and a `*Note.*` paragraph right after a figure goes into it, below the image. In `stu` and `man` the figures that the
   class holds back to the end are put out before the first appendix, and an appendix's own figures stay in it (Figure A1).
