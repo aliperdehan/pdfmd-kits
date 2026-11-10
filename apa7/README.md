@@ -26,6 +26,7 @@ pdfmd paper --kit apa7:man
 | `course`, `professor` (or `instructor`) | student title page |
 | `duedate` (or `date`) | student title page |
 | `abstract`, `keywords` | the abstract is on its own page; `keywords` may be a list |
+| `abstractname` | the abstract's heading instead of *Abstract* (`Executive Summary`); in `jou`, where the class prints no heading, the abstract then starts with it, centred |
 | `authornote` | manuscript author note |
 | `titleoffset` | how far down the title page the title starts: a number of lines (`6`; the class's own is 4 in `stu` and `man`) or a length (`2in`, `5cm`, `40mm`, `72pt`, `3em`); every mode |
 | `bibliography` | a `.bib` file; cite with `[@key]` or `[@key, p. 12]` |

@@ -5,6 +5,8 @@ new front-matter key, is a minor bump of the repository; a fix is a patch; a cha
 
 ## Unreleased
 
+- apa7: `abstractname:` is the abstract's heading (`Executive Summary`) in every mode; without it the heading stays *Abstract*
+  (and `jou` keeps its abstract without a heading). `example/options.md` uses it.
 - apa7: `titleoffset:` sets how far down the title page the title starts, in lines (`6`) or as a length (`2in`, `5cm`); without it
   the class's own space is kept (4 lines in `stu` and `man`). Any other value stops the build with a message naming the key.
   New example `example/options.md`.

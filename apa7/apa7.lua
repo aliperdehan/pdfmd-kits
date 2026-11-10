@@ -10,6 +10,7 @@
 --   course, professor        title-page fields of the student paper (instructor: is accepted for professor:)
 --   duedate                  the date on the title page (date: is used when there is none)
 --   abstract, keywords       keywords may be a list
+--   abstractname             the abstract's heading (Abstract); jou, which prints none, gets one when this is set
 --   authornote               the author note of a manuscript
 --   titleoffset              how far down the title page the title starts: lines (4) or a length (2in, 5cm)
 --
@@ -86,6 +87,11 @@ end
 local function Meta(meta)
   if not FORMAT:match('latex') and not FORMAT:match('beamer') then return nil end
   if plain(meta.documentclass) ~= 'apa7' then return nil end
+
+  local mode = 'jou'                         -- the class's own default when no mode option is given
+  for _, name in ipairs({ 'stu', 'man', 'doc' }) do
+    if has_option(meta, name) then mode = name break end
+  end
 
   local lines = {}
   local function emit(command, value)
@@ -170,10 +176,6 @@ local function Meta(meta)
 
   -- titleoffset: the class's own space above the title is replaced (etoolbox; \maketitle is read with @ a letter)
   if meta.titleoffset ~= nil then
-    local mode = 'jou'                       -- the class's own default when no mode option is given
-    for _, name in ipairs({ 'stu', 'man', 'doc' }) do
-      if has_option(meta, name) then mode = name break end
-    end
     lines[#lines + 1] = '\\usepackage{etoolbox}\\makeatletter\\patchcmd{\\maketitle}{' .. TITLE_SPACE[mode] .. '}'
       .. '{\\vspace*{' .. title_offset(meta.titleoffset) .. '}}{}'
       .. '{\\PackageWarningNoLine{apa7.lua}{titleoffset: not applied, the class\'s title page has changed}}\\makeatother'
@@ -186,7 +188,15 @@ local function Meta(meta)
   if #keywords > 0 then emit('keywords', table.concat(keywords, ', ')) end
 
   -- the abstract moves into the preamble; Pandoc's own abstract environment is dropped
-  emit('abstract', to_latex(meta.abstract))
+  local abstract = to_latex(meta.abstract)
+  -- abstractname: the heading's text. babel sets \abstractname when the document begins, so it is set after that. The
+  -- class prints no heading in jou; there the abstract starts with the name, centred.
+  local abstractname = to_latex(meta.abstractname)
+  if abstractname then
+    lines[#lines + 1] = '\\AtBeginDocument{\\renewcommand{\\abstractname}{' .. abstractname .. '}}'
+    if mode == 'jou' and abstract then abstract = '{\\centering\\abstractname\\par}' .. abstract end
+  end
+  emit('abstract', abstract)
 
   if #names > 0 then meta['author-meta'] = pandoc.MetaString(table.concat(names, ', ')) end
   meta.author, meta.abstract = nil, nil
