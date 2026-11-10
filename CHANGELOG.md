@@ -5,6 +5,9 @@ new front-matter key, is a minor bump of the repository; a fix is a patch; a cha
 
 ## Unreleased
 
+- apa7: `coverpage:` puts a cover page in front of the title page: `true` a plain one (title, authors, course, professor, due date),
+  a file name that PDF's pages (pdfpages). It has no running head or page number and is not counted: the title page stays page
+  1, as APA 7 numbers it. `example/options.md` has the plain cover, the new `example/coverfile.md` a PDF one.
 - apa7: `abstractname:` is the abstract's heading (`Executive Summary`) in every mode; without it the heading stays *Abstract*
   (and `jou` keeps its abstract without a heading). `example/options.md` uses it.
 - apa7: `titleoffset:` sets how far down the title page the title starts, in lines (`6`) or as a length (`2in`, `5cm`); without it

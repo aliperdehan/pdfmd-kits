@@ -13,6 +13,7 @@
 --   abstractname             the abstract's heading (Abstract); jou, which prints none, gets one when this is set
 --   authornote               the author note of a manuscript
 --   titleoffset              how far down the title page the title starts: lines (4) or a length (2in, 5cm)
+--   coverpage                true: a plain cover page before the title page; a file name: that PDF's pages instead
 --
 -- The filter only runs for LaTeX output and only when the document class is apa7.
 --
@@ -82,6 +83,42 @@ local function title_offset(value)
   local amount, unit = text:match('^(%d*%.?%d+)%s*(%a+)$')
   if amount and UNITS[unit] then return amount .. unit end
   error('apa7 kit: titleoffset: "' .. text .. '" is neither a number of lines (4) nor a length (2in, 5cm, 40mm, 72pt, 3em)', 0)
+end
+
+-- coverpage: true writes a plain page (title, authors, course, professor, due date); a file name puts that PDF's pages
+-- (pdfpages) in front. Either is put in front of the title page by \maketitle, so a partial build without a title page
+-- has no cover either. The cover has no running head and no page number, and the title page stays page 1 (APA 7).
+local function cover_page(meta, names)
+  local value = meta.coverpage
+  if value == nil then return nil end
+  local text = kind(value) == 'boolean' and tostring(value) or utils.stringify(value)
+  text = text:gsub('^%s+', ''):gsub('%s+$', '')
+  local word = text:lower()
+  if word == 'false' or word == 'no' or word == '' then return nil end
+  if word == 'true' or word == 'yes' then
+    local authors = {}
+    for i, name in ipairs(names) do authors[i] = to_latex(pandoc.Str(name)) or name end
+    local by = table.concat(authors, ', ')
+    if #authors == 2 then by = authors[1] .. ' and ' .. authors[2]
+    elseif #authors > 2 then by = table.concat(authors, ', ', 1, #authors - 1) .. ', and ' .. authors[#authors] end
+    local parts = { '\\begin{titlepage}\\centering\\vspace*{\\fill}' }
+    local title = to_latex(meta.title)
+    if title then parts[#parts + 1] = '{\\large\\bfseries ' .. title .. '\\par}\\vspace{2\\baselineskip}' end
+    if by ~= '' then parts[#parts + 1] = by .. '\\par\\vspace{2\\baselineskip}' end
+    local fields = { meta.course, meta.professor or meta.instructor, meta.duedate or meta.date }
+    for i = 1, 3 do
+      local line = to_latex(fields[i])
+      if line then parts[#parts + 1] = line .. '\\par ' end
+    end
+    parts[#parts + 1] = '\\vspace*{\\fill}\\end{titlepage}'
+    return table.concat(parts), false
+  end
+  if text:match('[{}\\%%#]') then
+    error('apa7 kit: coverpage: "' .. text .. '" is neither true nor a file name (a PDF beside the document)', 0)
+  end
+  return '\\IfFileExists{' .. text .. '}{\\includepdf[pages=-]{' .. text .. '}}{\\PackageError{apa7.lua}'
+    .. '{coverpage: ' .. text .. ' not found}{Put the PDF beside the document, or write coverpage: true for a plain cover page.}}',
+    true
 end
 
 local function Meta(meta)
@@ -197,6 +234,13 @@ local function Meta(meta)
     if mode == 'jou' and abstract then abstract = '{\\centering\\abstractname\\par}' .. abstract end
   end
   emit('abstract', abstract)
+
+  local cover, from_file = cover_page(meta, names)
+  if cover then
+    if from_file then lines[#lines + 1] = '\\usepackage{pdfpages}' end
+    lines[#lines + 1] = '\\let\\apaKitMaketitle\\maketitle\\renewcommand{\\maketitle}{\\pagenumbering{alph}'
+      .. cover .. '\\clearpage\\pagenumbering{arabic}\\apaKitMaketitle}'
+  end
 
   if #names > 0 then meta['author-meta'] = pandoc.MetaString(table.concat(names, ', ')) end
   meta.author, meta.abstract = nil, nil

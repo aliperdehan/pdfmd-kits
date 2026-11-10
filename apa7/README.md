@@ -28,6 +28,7 @@ pdfmd paper --kit apa7:man
 | `abstract`, `keywords` | the abstract is on its own page; `keywords` may be a list |
 | `abstractname` | the abstract's heading instead of *Abstract* (`Executive Summary`); in `jou`, where the class prints no heading, the abstract then starts with it, centred |
 | `authornote` | manuscript author note |
+| `coverpage` | `true`: a plain cover page before the title page (title, authors, `course`, `professor`, `duedate`, centred); a file name (`cover.pdf`, beside the document): that PDF's pages instead. No running head or page number on it, and the APA title page stays page 1; every mode, not in a partial build |
 | `titleoffset` | how far down the title page the title starts: a number of lines (`6`; the class's own is 4 in `stu` and `man`) or a length (`2in`, `5cm`, `40mm`, `72pt`, `3em`); every mode |
 | `bibliography` | a `.bib` file; cite with `[@key]` or `[@key, p. 12]` |
 
